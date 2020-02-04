@@ -1,0 +1,28 @@
+version: '2.1'
+
+networks:
+  web:
+    external: true
+
+services:
+  db:
+    labels:
+      - traefik.enable=false
+  webapp:
+    networks:
+      - default
+      - web
+    labels:
+      - traefik.backend=odm
+      - traefik.frontend.rule=Host:maps.propelled.com.au
+      - traefik.docker.network=web
+      - traefik.port=8000
+  broker:
+    labels:
+      - traefik.enable=false
+  worker:
+    labels:
+      - traefik.enable=false
+  node-odm:
+    labels:
+      - traefik.enable=false

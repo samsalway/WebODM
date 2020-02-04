@@ -219,6 +219,10 @@ start(){
     if [[ $dev_mode = true ]]; then
         command+=" -f docker-compose.dev.yml"
     fi
+
+    if [ -f traefik.yml ]; then
+        command+=" -f traefik.yml"
+    fi
 	
 	if [ "$WO_SSL" = "YES" ]; then
 		if [ ! -z "$WO_SSL_KEY" ] && [ ! -e "$WO_SSL_KEY" ]; then
@@ -330,7 +334,7 @@ if [[ $1 = "start" ]]; then
 elif [[ $1 = "stop" ]]; then
 	environment_check
 	echo "Stopping WebODM..."
-	run "docker-compose -f docker-compose.yml -f docker-compose.nodeodm.yml -f docker-compose.nodemicmac.yml stop"
+	run "docker-compose -f docker-compose.yml -f docker-compose.nodeodm.yml -f docker-compose.nodemicmac.yml -f traefik.yml stop"
 elif [[ $1 = "restart" ]]; then
 	environment_check
 	echo "Restarting WebODM..."
